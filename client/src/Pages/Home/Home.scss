@@ -1,0 +1,31 @@
+.home__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .home__nav {
+    text-align: center;
+    margin-top: 150px;
+  }
+  
+  .home__link, .link {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 2rem;
+    
+    text-align: center;
+    color: #333;
+    transition: all .2s ease-in;
+    &:hover {
+        color: #3437f6;
+    }
+  }
+  
+  .home__text {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #555;
+    margin: 2rem;
+  }
