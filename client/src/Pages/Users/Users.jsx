@@ -10,17 +10,12 @@ function Users() {
     const [groupActive, setGroupActive] = useState(0)
     const [searchValue, setSearchValue] = useState("")
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-  
+   
     useEffect(() => {
       setIsloading(true);
-      axios.get(`http://localhost:5000/groups/${groupActive}/users?page=${currentPage}&limit=10`)
+      axios.get(`http://localhost:5000/groups/${groupActive}/users`)
       .then(response => {
-        setUsers(response.data.users);
-        setCurrentPage(response.data.currentPage);
-        setTotalPages(response.data.totalPages);
-        console.log(response)
+        setUsers(response.data);
       }).finally(() => setIsloading(false) )
 
       axios.get('http://localhost:5000/groups')
@@ -28,7 +23,7 @@ function Users() {
         setGroups(response.data);
       })
 
-    }, [searchValue, groupActive,currentPage ]);
+    }, [searchValue, groupActive]);
   
     return (
       <div className="App">
@@ -71,15 +66,6 @@ function Users() {
             ))}
 
         </div>
-     
-
-      <ul className="pagination">
-        {
-          [...Array(totalPages)]
-          .map((_, index) =>
-           <li className={currentPage === index+1 ? "active" : "" } onClick={() => setCurrentPage(index+1)}>{index + 1}</li>)
-        }
-      </ul>
       </div>
     );
   }
