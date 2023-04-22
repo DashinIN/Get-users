@@ -10,8 +10,7 @@ const users = [
   { id: 2, name: 'Jane', group: 'Бухгалтерия' },
   { id: 3, name: 'Bob', group: 'Отдел кадров' },
   { id: 4, name: 'Alice', group: 'Отдел кадров' },
-  // ...
-  // Добавьте данные о пользователе в массив `users`.
+  { id: 4, name: 'Alice2', }, 
 ];
 
 const groups = [
