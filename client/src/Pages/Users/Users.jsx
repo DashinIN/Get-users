@@ -9,12 +9,18 @@ function Users() {
     const [groups, setGroups] = useState([]);
     const [groupActive, setGroupActive] = useState(0)
     const [searchValue, setSearchValue] = useState("")
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
   
     useEffect(() => {
       setIsloading(true);
-      axios.get(`http://localhost:5000/groups/${groupActive}/users`)
+      axios.get(`http://localhost:5000/groups/${groupActive}/users?page=${currentPage}&limit=10`)
       .then(response => {
-        setUsers(response.data);
+        setUsers(response.data.users);
+        setCurrentPage(response.data.currentPage);
+        setTotalPages(response.data.totalPages);
+        console.log(response)
       }).finally(() => setIsloading(false) )
 
       axios.get('http://localhost:5000/groups')
@@ -22,7 +28,7 @@ function Users() {
         setGroups(response.data);
       })
 
-    }, [groupActive]);
+    }, [searchValue, groupActive,currentPage ]);
   
     return (
       <div className="App">
@@ -34,7 +40,7 @@ function Users() {
              <li 
              onClick={()=> setGroupActive(index)}
              className={groupActive === index ? "active" : ""}
-             key={group.id}
+             key={index}
               >{group.name}</li>
             )}
 
@@ -68,9 +74,11 @@ function Users() {
      
 
       <ul className="pagination">
-        <li>1</li>
-        <li className="active">2</li>
-        <li>3</li>
+        {
+          [...Array(totalPages)]
+          .map((_, index) =>
+           <li className={currentPage === index+1 ? "active" : "" } onClick={() => setCurrentPage(index+1)}>{index + 1}</li>)
+        }
       </ul>
       </div>
     );
